@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 50%, #ffafbd 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Georgia', serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating Hearts Background */
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 24px;
+      animation: floatUp linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(360deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* Main Content */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Pulsing Heart */
+    .pulsing-heart {
+      font-size: 80px;
+      color: #e74c3c;
+      animation: pulse 1s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(231, 76, 60, 0.6));
+      margin-bottom: 10px;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    /* Hugging Animals Container */
+    .animals-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 0;
+      margin: 20px 0;
+    }
+
+    /* Cute Bear CSS Art */
+    .bear {
+      position: relative;
+      width: 100px;
+      height: 120px;
+    }
+
+    .bear-head {
+      width: 80px;
+      height: 70px;
+      background: #8B4513;
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      top: 0;
+      left: 10px;
+    }
+
+    .bear.pink .bear-head {
+      background: #DDA0DD;
+    }
+
+    .bear-ear {
+      width: 25px;
+      height: 25px;
+      background: #8B4513;
+      border-radius: 50%;
+      position: absolute;
+      top: -5px;
+    }
+
+    .bear.pink .bear-ear {
+      background: #DDA0DD;
+    }
+
+    .bear-ear.left {
+      left: 10px;
+    }
+
+    .bear-ear.right {
+      right: 10px;
+    }
+
+    .bear-ear-inner {
+      width: 12px;
+      height: 12px;
+      background: #FFB6C1;
+      border-radius: 50%;
+      position: absolute;
+      top: 6px;
+      left: 6px;
+    }
+
+    .bear-face {
+      position: absolute;
+      top: 25px;
+      left: 20px;
+      width: 40px;
+      height: 30px;
+      background: #D2B48C;
+      border-radius: 50%;
+    }
+
+    .bear.pink .bear-face {
+      background: #FFE4E1;
+    }
+
+    .bear-eye {
+      width: 8px;
+      height: 10px;
+      background: #000;
+      border-radius: 50%;
+      position: absolute;
+      top: 20px;
+    }
+
+    .bear-eye.left {
+      left: 22px;
+    }
+
+    .bear-eye.right {
+      right: 22px;
+    }
+
+    .bear-eye::after {
+      content: '';
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+    }
+
+    .bear-nose {
+      width: 12px;
+      height: 8px;
+      background: #000;
+      border-radius: 50%;
+      position: absolute;
+      top: 35px;
+      left: 34px;
+    }
+
+    .bear-mouth {
+      width: 20px;
+      height: 10px;
+      border: 2px solid #000;
+      border-top: none;
+      border-radius: 0 0 50% 50%;
+      position: absolute;
+      top: 42px;
+      left: 30px;
+    }
+
+    .bear-blush {
+      width: 15px;
+      height: 8px;
+      background: rgba(255, 182, 193, 0.7);
+      border-radius: 50%;
+      position: absolute;
+      top: 35px;
+    }
+
+    .bear-blush.left {
+      left: 12px;
+    }
+
+    .bear-blush.right {
+      right: 12px;
+    }
+
+    .bear-body {
+      width: 70px;
+      height: 50px;
+      background: #8B4513;
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      bottom: 0;
+      left: 15px;
+    }
+
+    .bear.pink .bear-body {
+      background: #DDA0DD;
+    }
+
+    /* Arms for hugging */
+    .bear-arm {
+      width: 20px;
+      height: 40px;
+      background: #8B4513;
+      border-radius: 30px;
+      position: absolute;
+      bottom: 20px;
+    }
+
+    .bear.pink .bear-arm {
+      background: #DDA0DD;
+    }
+
+    .bear.left-bear .bear-arm {
+      right: -5px;
+      transform: rotate(-30deg);
+    }
+
+    .bear.right-bear .bear-arm {
+      left: -5px;
+      transform: rotate(30deg);
+    }
+
+    /* Heart between bears */
+    .love-heart {
+      font-size: 30px;
+      color: #e74c3c;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: heartBeat 0.8s ease-in-out infinite;
+      z-index: 5;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.3); }
+    }
+
+    /* Text */
+    .valentine-text {
+      font-size: 2.5rem;
+      color: #c0392b;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+      margin: 20px 0;
+      animation: textGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes textGlow {
+      0%, 100% {
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1), 0 0 20px rgba(231, 76, 60, 0.3);
+      }
+      50% {
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1), 0 0 40px rgba(231, 76, 60, 0.6);
+      }
+    }
+
+    /* Buttons Container */
+    .buttons-container {
+      display: flex;
+      gap: 40px;
+      margin-top: 20px;
+      position: relative;
+      height: 80px;
+      width: 300px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 15px 40px;
+      font-size: 1.3rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: white;
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(231, 76, 60, 0.6);
+    }
+
+    .btn-no {
+      background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+      color: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      position: absolute;
+      transition: all 0.1s ease-out;
+    }
+
+    /* Success Message */
+    .success-message {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .success-message.show {
+      display: flex;
+    }
+
+    .main-content.hidden {
+      display: none;
+    }
+
+    .success-text {
+      font-size: 3rem;
+      color: #c0392b;
+      text-align: center;
+    }
+
+    .success-hearts {
+      font-size: 60px;
+      animation: celebrateHearts 0.5s ease-in-out infinite;
+    }
+
+    @keyframes celebrateHearts {
+      0%, 100% { transform: scale(1) rotate(-5deg); }
+      50% { transform: scale(1.2) rotate(5deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Kissing Animals for Success Page */
+    .kissing-animals-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 0;
+      margin: 30px 0;
+      animation: kissAnimation 1.5s ease-in-out infinite;
+    }
+
+    @keyframes kissAnimation {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    .kiss-bear {
+      position: relative;
+      width: 120px;
+      height: 140px;
+    }
+
+    .kiss-bear-head {
+      width: 90px;
+      height: 80px;
+      background: #8B4513;
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      top: 0;
+      left: 15px;
+    }
+
+    .kiss-bear.pink .kiss-bear-head {
+      background: #DDA0DD;
+    }
+
+    .kiss-bear-ear {
+      width: 28px;
+      height: 28px;
+      background: #8B4513;
+      border-radius: 50%;
+      position: absolute;
+      top: -5px;
+    }
+
+    .kiss-bear.pink .kiss-bear-ear {
+      background: #DDA0DD;
+    }
+
+    .kiss-bear-ear.left {
+      left: 15px;
+    }
+
+    .kiss-bear-ear.right {
+      right: 15px;
+    }
+
+    .kiss-bear-ear-inner {
+      width: 14px;
+      height: 14px;
+      background: #FFB6C1;
+      border-radius: 50%;
+      position: absolute;
+      top: 7px;
+      left: 7px;
+    }
+
+    .kiss-bear-face {
+      position: absolute;
+      top: 30px;
+      left: 27px;
+      width: 45px;
+      height: 35px;
+      background: #D2B48C;
+      border-radius: 50%;
+    }
+
+    .kiss-bear.pink .kiss-bear-face {
+      background: #FFE4E1;
+    }
+
+    .kiss-bear-eye {
+      width: 6px;
+      height: 3px;
+      background: #000;
+      border-radius: 0 0 50% 50%;
+      position: absolute;
+      top: 25px;
+    }
+
+    .kiss-bear-eye.left {
+      left: 30px;
+    }
+
+    .kiss-bear-eye.right {
+      right: 30px;
+    }
+
+    .kiss-bear-nose {
+      width: 10px;
+      height: 7px;
+      background: #000;
+      border-radius: 50%;
+      position: absolute;
+      top: 40px;
+      left: 45px;
+    }
+
+    /* Puckered lips for kissing */
+    .kiss-bear-kiss-lips {
+      width: 12px;
+      height: 8px;
+      background: #FF69B4;
+      border-radius: 50%;
+      position: absolute;
+      top: 50px;
+    }
+
+    .left-kiss-bear .kiss-bear-kiss-lips {
+      left: 85px;
+      transform: rotate(-10deg);
+    }
+
+    .right-kiss-bear .kiss-bear-kiss-lips {
+      left: 20px;
+      transform: rotate(10deg);
+    }
+
+    .kiss-bear-blush {
+      width: 18px;
+      height: 10px;
+      background: rgba(255, 100, 100, 0.6);
+      border-radius: 50%;
+      position: absolute;
+      top: 38px;
+    }
+
+    .kiss-bear-blush.left {
+      left: 18px;
+    }
+
+    .kiss-bear-blush.right {
+      right: 18px;
+    }
+
+    .kiss-bear-body {
+      width: 80px;
+      height: 55px;
+      background: #8B4513;
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      bottom: 0;
+      left: 20px;
+    }
+
+    .kiss-bear.pink .kiss-bear-body {
+      background: #DDA0DD;
+    }
+
+    /* Kiss heart between bears */
+    .kiss-heart {
+      font-size: 35px;
+      position: relative;
+      top: -20px;
+      animation: kissHeartPulse 0.6s ease-in-out infinite;
+      z-index: 5;
+    }
+
+    @keyframes kissHeartPulse {
+      0%, 100% { 
+        transform: scale(1); 
+        opacity: 1;
+      }
+      50% { 
+        transform: scale(1.3); 
+        opacity: 0.8;
+      }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: confettiFall linear forwards;
+      z-index: 100;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Hearts Background -->
+  <div class="hearts-container" id="heartsContainer"></div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- Pulsing Heart -->
+    <div class="pulsing-heart">❤️</div>
+
+    <!-- Hugging Bears -->
+    <div class="animals-container">
+      <div class="bear left-bear">
+        <div class="bear-ear left"><div class="bear-ear-inner"></div></div>
+        <div class="bear-ear right"><div class="bear-ear-inner"></div></div>
+        <div class="bear-head"></div>
+        <div class="bear-face"></div>
+        <div class="bear-eye left"></div>
+        <div class="bear-eye right"></div>
+        <div class="bear-nose"></div>
+        <div class="bear-mouth"></div>
+        <div class="bear-blush left"></div>
+        <div class="bear-blush right"></div>
+        <div class="bear-body"></div>
+        <div class="bear-arm"></div>
+      </div>
+      
+      <div class="love-heart">💕</div>
+      
+      <div class="bear right-bear pink">
+        <div class="bear-ear left"><div class="bear-ear-inner"></div></div>
+        <div class="bear-ear right"><div class="bear-ear-inner"></div></div>
+        <div class="bear-head"></div>
+        <div class="bear-face"></div>
+        <div class="bear-eye left"></div>
+        <div class="bear-eye right"></div>
+        <div class="bear-nose"></div>
+        <div class="bear-mouth"></div>
+        <div class="bear-blush left"></div>
+        <div class="bear-blush right"></div>
+        <div class="bear-body"></div>
+        <div class="bear-arm"></div>
+      </div>
+    </div>
+
+    <!-- Valentine Text -->
+    <h1 class="valentine-text">Abby, will you be my Valentine? 💝</h1>
+
+    <!-- Buttons -->
+    <div class="buttons-container" id="buttonsContainer">
+      <button class="btn btn-yes" id="yesBtn">Yes! 💖</button>
+      <button class="btn btn-no" id="noBtn">No</button>
+    </div>
+  </div>
+
+  <!-- Success Message -->
+  <div class="success-message" id="successMessage">
+    <div class="success-hearts">💕💖💕</div>
+    <h1 class="success-text">Yay! I knew you would say yes! 😊</h1>
+    
+    <!-- Kissing Bears -->
+    <div class="kissing-animals-container">
+      <div class="kiss-bear left-kiss-bear">
+        <div class="kiss-bear-ear left"><div class="kiss-bear-ear-inner"></div></div>
+        <div class="kiss-bear-ear right"><div class="kiss-bear-ear-inner"></div></div>
+        <div class="kiss-bear-head"></div>
+        <div class="kiss-bear-face"></div>
+        <div class="kiss-bear-eye left"></div>
+        <div class="kiss-bear-eye right"></div>
+        <div class="kiss-bear-nose"></div>
+        <div class="kiss-bear-kiss-lips"></div>
+        <div class="kiss-bear-blush left"></div>
+        <div class="kiss-bear-blush right"></div>
+        <div class="kiss-bear-body"></div>
+      </div>
+      
+      <div class="kiss-heart">💋</div>
+      
+      <div class="kiss-bear right-kiss-bear pink">
+        <div class="kiss-bear-ear left"><div class="kiss-bear-ear-inner"></div></div>
+        <div class="kiss-bear-ear right"><div class="kiss-bear-ear-inner"></div></div>
+        <div class="kiss-bear-head"></div>
+        <div class="kiss-bear-face"></div>
+        <div class="kiss-bear-eye left"></div>
+        <div class="kiss-bear-eye right"></div>
+        <div class="kiss-bear-nose"></div>
+        <div class="kiss-bear-kiss-lips"></div>
+        <div class="kiss-bear-blush left"></div>
+        <div class="kiss-bear-blush right"></div>
+        <div class="kiss-bear-body"></div>
+      </div>
+    </div>
+    
+    <div class="success-hearts">💗💘💗</div>
+  </div>
+
+  <script>
+    // Create floating hearts
+    function createFloatingHearts() {
+      const container = document.getElementById('heartsContainer');
+      const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘'];
+      
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'floating-heart';
+          heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+          heart.style.left = Math.random() * 100 + '%';
+          heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+          heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+          heart.style.animationDelay = (Math.random() * 2) + 's';
+          container.appendChild(heart);
+          
+          // Remove heart after animation
+          setTimeout(() => {
+            heart.remove();
+          }, 15000);
+        }, i * 500);
+      }
+    }
+
+    // Continuously create hearts
+    createFloatingHearts();
+    setInterval(createFloatingHearts, 10000);
+
+    // No button escape logic
+    const noBtn = document.getElementById('noBtn');
+    const buttonsContainer = document.getElementById('buttonsContainer');
+    const yesBtn = document.getElementById('yesBtn');
+    const mainContent = document.getElementById('mainContent');
+    const successMessage = document.getElementById('successMessage');
+
+    let escapeCount = 0;
+
+    noBtn.addEventListener('mouseover', (e) => {
+      escapeCount++;
+      
+      const containerRect = buttonsContainer.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+      
+      // Calculate new random position within viewport
+      const maxX = window.innerWidth - btnRect.width - 20;
+      const maxY = window.innerHeight - btnRect.height - 20;
+      
+      let newX = Math.random() * maxX;
+      let newY = Math.random() * maxY;
+      
+      // Make sure it's not too close to current position
+      const currentX = btnRect.left;
+      const currentY = btnRect.top;
+      
+      if (Math.abs(newX - currentX) < 100) {
+        newX = currentX > maxX / 2 ? newX - 150 : newX + 150;
+      }
+      if (Math.abs(newY - currentY) < 100) {
+        newY = currentY > maxY / 2 ? newY - 150 : newY + 150;
+      }
+      
+      // Clamp values
+      newX = Math.max(20, Math.min(newX, maxX));
+      newY = Math.max(20, Math.min(newY, maxY));
+      
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = newX + 'px';
+      noBtn.style.top = newY + 'px';
+      
+      // Fun messages after multiple attempts
+      if (escapeCount === 3) {
+        noBtn.textContent = "Can't catch me!";
+      } else if (escapeCount === 5) {
+        noBtn.textContent = "Just say Yes! 😄";
+      } else if (escapeCount === 8) {
+        noBtn.textContent = "Please? 🥺";
+      } else if (escapeCount >= 10) {
+        noBtn.textContent = "Fine, I give up...";
+        noBtn.style.opacity = "0.5";
+        noBtn.style.transform = "scale(0.8)";
+      }
+    });
+
+    // Yes button click
+    yesBtn.addEventListener('click', () => {
+      mainContent.classList.add('hidden');
+      successMessage.classList.add('show');
+      createConfetti();
+    });
+
+    // Create confetti celebration
+    function createConfetti() {
+      const colors = ['#e74c3c', '#ff6b6b', '#ff8e8e', '#ffb6c1', '#ffd1d1', '#fff'];
+      
+      for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.width = (Math.random() * 10 + 5) + 'px';
+          confetti.style.height = (Math.random() * 10 + 5) + 'px';
+          confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+          confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => confetti.remove(), 4000);
+        }, i * 30);
+      }
+    }
+  </script>
+</body>
+</html>
